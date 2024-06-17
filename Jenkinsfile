@@ -4,6 +4,18 @@ pipeline {
         string(name: 'GREETING', defaultValue: 'Hello', description: 'The greeting to use')
     }
     stages {
+                stage('Deploy') {
+            steps {
+                echo 'Deploying ...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing ...'
+            }
+        }
+        
         stage('Build') {
             agent {
                 docker {
