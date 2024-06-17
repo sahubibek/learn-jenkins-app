@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    parameters {
+        string(name: 'GREETING', defaultValue: 'Hello', description: 'The greeting to use')
+    }
     stages {
         stage('Build') {
             agent {
