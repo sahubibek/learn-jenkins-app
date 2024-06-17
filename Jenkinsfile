@@ -15,7 +15,13 @@ pipeline {
             }
         }
 
-
+ stage('Set Script Permissions') {
+            steps {
+                script {
+                    sh 'chmod +x my_script.sh'
+                }
+            }
+        }
         stage('Run Shell Script') {
             steps {
                 script {
