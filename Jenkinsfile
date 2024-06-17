@@ -1,38 +1,28 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'GREETING', defaultValue: 'Hello', description: 'The greeting to use')
+        booleanParam(name: 'SKIP_BUILD', defaultValue: false, description: 'Skip the build stage')
+        booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip the test stage')
     }
     stages {
-                stage('Deploy') {
-            steps {
-                echo 'Deploying ...'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Testing 2ndtime...'
-            }
-        }
-        
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
+            when {
+                expression { !params.SKIP_BUILD }
             }
             steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                    ls -la
-                '''
+                echo 'Building...'
+                // Your build steps here
             }
         }
+        stage('Test') {
+            when {
+                expression { !params.SKIP_TESTS }
+            }
+            steps {
+                echo 'Testing...'
+                // Your test steps here
+            }
+        }
+        // Other stages...
     }
 }
