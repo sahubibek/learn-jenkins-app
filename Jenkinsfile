@@ -14,6 +14,17 @@ pipeline {
                 // Your build steps here
             }
         }
+
+
+        stage('Run Shell Script') {
+            steps {
+                script {
+                    // Assuming 'my_script.sh' is in the root of your repository
+                    sh './my_script.sh'
+                }
+            }
+        }
+ 
         stage('Test') {
             when {
                 expression { !params.SKIP_TESTS }
